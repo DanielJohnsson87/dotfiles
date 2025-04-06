@@ -18,7 +18,14 @@ local on_attach = function(client, bufnr)
     -- LSP core mappings
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    --    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "gr", function()
+        require("telescope.builtin")
+            .lsp_references({
+                show_line = false,
+                include_declaration = false,
+            })
+    end, opts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
     -- TypeScript: organize imports

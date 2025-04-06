@@ -15,7 +15,6 @@ end, { desc = "Format file or range" })
 vim.api.nvim_set_keymap('n', '<leader>n', ':NERDTreeFocus<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-t>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
 
-
 vim.keymap.set("n", "<leader>oi", function() vim.cmd("TSToolsOrganizeImports") end, { desc = "Organize Imports" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz");
 vim.keymap.set("n", "<C-d>", "<C-d>zz");

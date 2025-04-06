@@ -8,7 +8,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     "ThePrimeagen/vim-be-good",
     "scrooloose/nerdtree",
-    "preservim/nerdcommenter",
+    "numToStr/Comment.nvim",
     "mhinz/vim-startify",
     { "nvim-telescope/telescope.nvim" },
     {
@@ -43,3 +43,6 @@ require("config.harpoon").setup();
 
 -- Gitsigns setup
 require('gitsigns').setup()
+
+-- numToStr/Comment.nvim
+require('Comment').setup()
