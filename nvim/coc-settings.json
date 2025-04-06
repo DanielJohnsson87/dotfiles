@@ -1,9 +1,0 @@
-{
-  "typescript.suggest.enabled": true,
-  "typescript.suggestionActions.enabled": true,
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.format.enable": true,
-  "coc.preferences.formatOnSaveFiletypes": ["typescript", "javascript"],
-  "coc.preferences.hoverTarget": "floating",
-  "diagnostic.virtualText": true
-}
