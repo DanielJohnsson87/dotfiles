@@ -5,6 +5,7 @@ vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { nor
 vim.api.nvim_set_keymap('n', '<leader>ff',
     "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob', '!.git/', '--glob', '!**/node_modules/**', '--glob', '!.vercel/', '--glob', '!.next/', '--glob', '!dist/', '--glob', '!build/'} })<cr>",
     { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Git Status Files' })
 
 
 vim.keymap.set({ "n", "v" }, "<leader>f", function()

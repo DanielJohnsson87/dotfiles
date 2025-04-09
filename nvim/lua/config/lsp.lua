@@ -28,6 +28,20 @@ local on_attach = function(client, bufnr)
     end, opts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
+    vim.o.updatetime = 250 -- shorter delay before CursorHold triggers
+
+    vim.api.nvim_create_autocmd("CursorHold", {
+        callback = function()
+            vim.diagnostic.open_float(nil, {
+                focusable = false,
+                border = "rounded",
+                source = "always",
+                prefix = '',
+                scope = "cursor",
+            })
+        end,
+    })
+
     -- TypeScript: organize imports
     if client.name == "typescript-tools" or client.name == "tsserver" then
         vim.keymap.set("n", "<leader>oi", function()
@@ -131,5 +145,24 @@ require("conform").setup({
     format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
+    },
+})
+
+require("noice").setup({
+    lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+    },
+    -- you can enable a preset for easier configuration
+    presets = {
+        bottom_search = true,         -- use a classic bottom cmdline for search
+        command_palette = true,       -- position the cmdline and popupmenu together
+        long_message_to_split = true, -- long messages will be sent to a split
+        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false,       -- add a border to hover docs and signature help
     },
 })

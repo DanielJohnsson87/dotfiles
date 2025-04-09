@@ -34,6 +34,21 @@ require("lazy").setup({
     "L3MON4D3/LuaSnip",                  -- Snippet engine
     "saadparwaiz1/cmp_luasnip",          -- Snippet source
     "matze/vim-move",
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
+    },
     -- { "tpope/vim-fugitive" },
     { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
 })
