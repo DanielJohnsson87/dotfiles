@@ -1,7 +1,7 @@
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "eslint", "jsonls", "astro", "html", "cssls" }, -- add your desired servers
+    ensure_installed = { "lua_ls", "gopls", "eslint", "jsonls", "astro", "html", "cssls" }, -- add your desired servers
     automatic_installation = true,
 })
 
@@ -58,6 +58,8 @@ lspconfig.astro.setup({
     on_attach = on_attach,
     filetypes = { "astro" },
 })
+
+lspconfig.gopls.setup {}
 
 lspconfig.lua_ls.setup({
     on_attach = on_attach,
