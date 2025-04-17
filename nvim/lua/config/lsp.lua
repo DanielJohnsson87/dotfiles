@@ -71,6 +71,9 @@ lspconfig.eslint.setup({
     settings = {
         workingDirectory = { mode = "auto" },
     },
+    cmd_env = {
+        BABEL_ENV = "development",
+    },
 })
 
 local cmp = require("cmp")
