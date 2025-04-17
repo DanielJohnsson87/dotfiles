@@ -31,25 +31,18 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim", -- bridge between mason and lspconfig
     "hrsh7th/nvim-cmp",                  -- Completion plugin
     "hrsh7th/cmp-nvim-lsp",              -- LSP source for nvim-cmp
-    "L3MON4D3/LuaSnip",                  -- Snippet engine
-    "saadparwaiz1/cmp_luasnip",          -- Snippet source
-    "matze/vim-move",
     {
-        "folke/noice.nvim",
-        event = "VeryLazy",
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
         opts = {
-            -- add any options here
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
         },
-        dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
-            "rcarriga/nvim-notify",
-        }
     },
-    -- { "tpope/vim-fugitive" },
+    "matze/vim-move",
     { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
 })
 

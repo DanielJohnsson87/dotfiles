@@ -63,23 +63,6 @@ lspconfig.gopls.setup {}
 lspconfig.lua_ls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-    settings = {
-        Lua = {
-            runtime = {
-                version = "LuaJIT", -- most common for Neovim
-            },
-            diagnostics = {
-                globals = { "vim" }, -- avoids "undefined global 'vim'"
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false, -- stops prompts about "luv" etc.
-            },
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
 })
 
 lspconfig.eslint.setup({
@@ -91,14 +74,8 @@ lspconfig.eslint.setup({
 })
 
 local cmp = require("cmp")
-local luasnip = require("luasnip")
-
+--
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
     mapping = cmp.mapping.preset.insert({
         ["<Tab>"] = cmp.mapping.select_next_item(),
         ["<S-Tab>"] = cmp.mapping.select_prev_item(),
@@ -106,10 +83,9 @@ cmp.setup({
     }),
     sources = {
         { name = "nvim_lsp" },
-        { name = "luasnip" },
     },
 })
-
+--
 require("typescript-tools").setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -141,29 +117,11 @@ require("conform").setup({
         json = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
+        scss = { "prettier" },
         lua = { "stylua" }, -- optional, for lua files
     },
     format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
-    },
-})
-
-require("noice").setup({
-    lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-        },
-    },
-    -- you can enable a preset for easier configuration
-    presets = {
-        bottom_search = true,         -- use a classic bottom cmdline for search
-        command_palette = true,       -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,       -- add a border to hover docs and signature help
     },
 })
