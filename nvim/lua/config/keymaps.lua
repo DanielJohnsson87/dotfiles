@@ -3,6 +3,8 @@ local refactor_utils = require("utils.refactor")
 -- Telescope key mappings
 vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>fr", "<cmd>Telescope resume<cr>",
+    { noremap = true, silent = true, desc = "Resume last Telescope search" })
 
 vim.api.nvim_set_keymap('n', '<leader>ff',
     "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob', '!.git/', '--glob', '!**/node_modules/**', '--glob', '!.vercel/', '--glob', '!.next/', '--glob', '!dist/', '--glob', '!build/'} })<cr>",
