@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
     require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "html", "javascript", "typescript", "tsx", "css" },
+        ensure_installed = { "go", "gomod", "gosum", "lua", "html", "javascript", "typescript", "tsx", "css" },
         highlight = {
             enable = true,
         },
@@ -25,4 +25,3 @@ function M.setup()
 end
 
 return M
-

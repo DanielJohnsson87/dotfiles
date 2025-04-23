@@ -25,7 +25,9 @@ local on_attach = function(client, bufnr)
                 include_declaration = false,
             })
     end, opts)
-    vim.keymap.set("n", "grn", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>*', [[:let @/='\<'.expand('<cword>').'\>'<CR>n]],
+        { desc = "Search for word under cursor" })
 
     vim.o.updatetime = 250 -- shorter delay before CursorHold triggers
 
@@ -58,7 +60,10 @@ lspconfig.astro.setup({
     filetypes = { "astro" },
 })
 
-lspconfig.gopls.setup {}
+lspconfig.gopls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
 lspconfig.lua_ls.setup({
     on_attach = on_attach,
@@ -126,5 +131,5 @@ require("conform").setup({
     format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
-    },
+    }
 })
