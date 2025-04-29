@@ -12,6 +12,10 @@ require("lazy").setup({
     "mhinz/vim-startify",
     { "nvim-telescope/telescope.nvim" },
     {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
+    {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         dependencies = {
@@ -54,3 +58,5 @@ require('gitsigns').setup()
 
 -- numToStr/Comment.nvim
 require('Comment').setup()
+
+require('lualine').setup()
