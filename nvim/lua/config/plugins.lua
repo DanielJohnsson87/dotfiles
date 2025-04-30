@@ -25,6 +25,15 @@ require("lazy").setup({
             require("config.treesitter").setup()
         end,
     },
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+            require("treesitter-context").setup({
+                enable = true,
+                max_lines = 3, -- how many lines of context to show
+            })
+        end,
+    },
     "github/copilot.vim",
     "folke/tokyonight.nvim",
     { "lewis6991/gitsigns.nvim",      dependencies = { "nvim-lua/plenary.nvim" } },
