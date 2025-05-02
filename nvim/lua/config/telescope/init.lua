@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+    require('telescope').load_extension('fzf')
     local multigrep = require("config.telescope.multigrep")
 
     vim.keymap.set("n", "<leader>fg", multigrep.live_multigrep)

@@ -11,6 +11,7 @@ require("lazy").setup({
     "numToStr/Comment.nvim",
     "mhinz/vim-startify",
     { "nvim-telescope/telescope.nvim" },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { 'nvim-tree/nvim-web-devicons' }
