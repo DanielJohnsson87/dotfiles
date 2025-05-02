@@ -79,3 +79,5 @@ require('lualine').setup({
         }
     }
 })
+
+require("config.telescope").setup()
