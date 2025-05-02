@@ -81,11 +81,13 @@ lspconfig.eslint.setup({
     },
 })
 
+
 local cmp = require("cmp")
 --
 cmp.setup({
     mapping = cmp.mapping.preset.insert({
-        ["<Tab>"] = cmp.mapping.select_next_item(),
+        -- ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<Tab>"] = nil, -- Disabled to avoid conflict with copilot
         ["<S-Tab>"] = cmp.mapping.select_prev_item(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
