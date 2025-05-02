@@ -68,4 +68,13 @@ require('gitsigns').setup()
 -- numToStr/Comment.nvim
 require('Comment').setup()
 
-require('lualine').setup()
+require('lualine').setup({
+    sections = {
+        lualine_c = {
+            {
+                'filename',
+                path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
+            }
+        }
+    }
+})
