@@ -12,7 +12,7 @@ require("lazy").setup({
     "mhinz/vim-startify",
     { "nvim-telescope/telescope.nvim" },
     {
-        'nvim-lualine/lualine.nvim',
+        "nvim-lualine/lualine.nvim",
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
     {
@@ -56,6 +56,7 @@ require("lazy").setup({
         },
     },
     "matze/vim-move",
+    "tpope/vim-surround",
     { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
 })
 
