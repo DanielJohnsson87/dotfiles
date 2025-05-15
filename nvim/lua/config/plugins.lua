@@ -37,6 +37,7 @@ require("lazy").setup({
     },
     "github/copilot.vim",
     "folke/tokyonight.nvim",
+    { "catppuccin/nvim",              name = "catppuccin",                                                priority = 1000 },
     { "lewis6991/gitsigns.nvim",      dependencies = { "nvim-lua/plenary.nvim" } },
     { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
     { "stevearc/conform.nvim",        opts = {} },

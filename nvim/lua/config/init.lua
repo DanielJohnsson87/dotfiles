@@ -8,4 +8,4 @@ require("config.lsp")
 require("config.keymaps")
 
 -- Colorscheme
-vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme catppuccin")
