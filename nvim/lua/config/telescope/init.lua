@@ -12,7 +12,7 @@ M.setup = function()
         { noremap = true, silent = true, desc = "Resume last Telescope search" })
 
     vim.api.nvim_set_keymap('n', '<leader>ff',
-        "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '--glob', '!.git/', '--glob', '!**/node_modules/**', '--glob', '!.vercel/', '--glob', '!.next/', '--glob', '!dist/', '--glob', '!build/'} })<cr>",
+        "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--no-ignore', '--hidden', '--glob', '!.git/', '--glob', '!**/node_modules/**', '--glob', '!.vercel/', '--glob', '!.next/', '--glob', '!dist/', '--glob', '!build/'} })<cr>",
         { noremap = true, silent = true })
     vim.keymap.set('n', '<leader>gs', require('telescope.builtin').git_status, { desc = 'Fuzzy find Git status changes' })
     vim.keymap.set('n', '<leader>gcb', require('telescope.builtin').git_bcommits,
