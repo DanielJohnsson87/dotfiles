@@ -66,7 +66,7 @@ require("lazy").setup({
 require("config.harpoon").setup();
 
 -- Gitsigns setup
-require('gitsigns').setup()
+require('gitsigns').setup({ current_line_blame = true })
 
 -- numToStr/Comment.nvim
 require('Comment').setup()
