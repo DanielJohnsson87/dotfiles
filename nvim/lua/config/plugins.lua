@@ -35,6 +35,12 @@ require("lazy").setup({
             })
         end,
     },
+    -- Context-aware commenting since the VT project uses .js extension instead of .jsx
+    -- Without this plugin, the commentstring will be set to "//" instead of "/** */"
+    {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
     "github/copilot.vim",
     "folke/tokyonight.nvim",
     { "catppuccin/nvim",              name = "catppuccin",                                                priority = 1000 },
@@ -69,7 +75,9 @@ require("config.harpoon").setup();
 require('gitsigns').setup({ current_line_blame = true })
 
 -- numToStr/Comment.nvim
-require('Comment').setup()
+require('Comment').setup({
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+})
 
 require('lualine').setup({
     sections = {
