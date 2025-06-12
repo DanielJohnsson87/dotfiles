@@ -66,6 +66,7 @@ require("lazy").setup({
   "matze/vim-move",
   "tpope/vim-surround",
   { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
+  "mustache/vim-mustache-handlebars",
 })
 
 -- Harpoon setup
