@@ -2,7 +2,7 @@ local refactor_utils = require("utils.refactor")
 
 
 vim.keymap.set({ "n", "v" }, "<leader>f", function()
-    require("conform").format({ async = true, lsp_fallback = true })
+  require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format file or range" })
 
 -- NERDTree key mappings
@@ -13,15 +13,18 @@ vim.keymap.set("n", "<leader>oi", function() vim.cmd("TSToolsOrganizeImports") e
 vim.keymap.set("n", "<C-u>", "<C-u>zz");
 vim.keymap.set("n", "<C-d>", "<C-d>zz");
 
+vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]],
+  { desc = "Search & replace word under cursor" })
+
 vim.keymap.set("n", "<leader>rd", function()
-    refactor_utils.prompt_delete_pattern()
-    print("Pattern highlighted. Use <leader>rdy to confirm deletion or <leader>rdn to remove highlight.")
+  refactor_utils.prompt_delete_pattern()
+  print("Pattern highlighted. Use <leader>rdy to confirm deletion or <leader>rdn to remove highlight.")
 end, { desc = "Delete lines matching pattern" })
 
 vim.keymap.set("n", "<leader>rdy", function()
-    refactor_utils.confirm_pattern()
+  refactor_utils.confirm_pattern()
 end, { desc = "Confirm deletion of lines matching pattern" })
 
 vim.keymap.set("n", "<leader>rdn", function()
-    refactor_utils.clear_pattern()
+  refactor_utils.clear_pattern()
 end, { desc = "Clear highlight of lines matching pattern" })

@@ -6,4 +6,4 @@
 
 # Additional notes
 - A Nerd Font is used by neovim, so make sure to install one of those.
-- Karabiner Elements is used to remap Caps Lock to work as Control and Escape.
+- Karabiner Elements is used to remap Caps Lock to work as Control.
