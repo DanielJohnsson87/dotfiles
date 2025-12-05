@@ -1,0 +1,19 @@
+{
+    "description": "Change caps_lock to Hyper (⌘⌥⌃⇧) if pressed with other keys, change caps_lock to escape if pressed alone.",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "caps_lock",
+                "modifiers": { "optional": ["any"] }
+            },
+            "to": [
+                {
+                    "key_code": "left_shift",
+                    "modifiers": ["left_command", "left_control", "left_option"]
+                }
+            ],
+            "to_if_alone": [{ "key_code": "escape" }],
+            "type": "basic"
+        }
+    ]
+}
