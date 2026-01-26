@@ -1,8 +1,20 @@
 -- Mason setup
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "gopls", "eslint", "jsonls", "astro", "html", "cssls" }, -- add your desired servers
-    automatic_installation = true,
+  ensure_installed = { "lua_ls", "gopls", "eslint", "jsonls", "html", "cssls", "omnisharp" }, -- add your desired servers
+  automatic_installation = true,
+  automatic_enable = true,
+  handlers = {
+    -- Default handler for all servers
+    function(server_name)
+      require("lspconfig")[server_name].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+    end,
+    -- Disable ts_ls since we're using typescript-tools
+    ["ts_ls"] = function() end,
+  },
 })
 
 -- Setup LSP servers
@@ -13,125 +25,122 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Common on_attach function (keymaps, etc.)
 local on_attach = function(client, bufnr)
-    local opts = { noremap = true, silent = true, buffer = bufnr }
+  local opts = { noremap = true, silent = true, buffer = bufnr }
 
-    -- LSP core mappings
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "grr", function()
-        require("telescope.builtin")
-            .lsp_references({
-                show_line = false,
-                include_declaration = false,
-            })
-    end, opts)
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>*', [[:let @/='\<'.expand('<cword>').'\>'<CR>n]],
-        { desc = "Search for word under cursor" })
+  -- LSP core mappings
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "grr", function()
+    require("telescope.builtin")
+        .lsp_references({
+          show_line = false,
+          include_declaration = false,
+        })
+  end, opts)
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set('n', '<leader>*', [[:let @/='\<'.expand('<cword>').'\>'<CR>n]],
+    { desc = "Search for word under cursor" })
 
-    vim.o.updatetime = 250 -- shorter delay before CursorHold triggers
+  vim.o.updatetime = 250 -- shorter delay before CursorHold triggers
 
-    vim.api.nvim_create_autocmd("CursorHold", {
-        callback = function()
-            vim.diagnostic.open_float(nil, {
-                focusable = false,
-                border = "rounded",
-                source = "always",
-                prefix = '',
-                scope = "cursor",
-            })
-        end,
-    })
+  vim.api.nvim_create_autocmd("CursorHold", {
+    callback = function()
+      vim.diagnostic.open_float(nil, {
+        focusable = false,
+        border = "rounded",
+        source = "always",
+        prefix = '',
+        scope = "cursor",
+      })
+    end,
+  })
 
-    -- TypeScript: organize imports
-    if client.name == "typescript-tools" or client.name == "tsserver" then
-        vim.keymap.set("n", "<leader>oi", function()
-            vim.cmd("TSToolsOrganizeImports")
-        end, { buffer = bufnr, desc = "Organize Imports" })
-    end
+  -- TypeScript: organize imports
+  if client.name == "typescript-tools" or client.name == "tsserver" then
+    vim.keymap.set("n", "<leader>oi", function()
+      vim.cmd("TSToolsOrganizeImports")
+    end, { buffer = bufnr, desc = "Organize Imports" })
+  end
 end
 
 -- Setup servers
 
--- astro --
-lspconfig.astro.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-    filetypes = { "astro" },
-})
-
 lspconfig.gopls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
+  capabilities = capabilities,
+  on_attach = on_attach,
 }
 
 lspconfig.lua_ls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 lspconfig.eslint.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        workingDirectory = { mode = "auto" },
-    },
-    cmd_env = {
-        BABEL_ENV = "development",
-    },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    workingDirectory = { mode = "auto" },
+  },
+  cmd_env = {
+    BABEL_ENV = "development",
+  },
 })
+
+-- lspconfig.omnisharp_mono.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   cmd = { vim.fn.stdpath("data") .. "/mason/bin/omnisharp-mono" }
+-- })
 
 
 local cmp = require("cmp")
 --
 cmp.setup({
-    mapping = cmp.mapping.preset.insert({
-        -- ["<Tab>"] = cmp.mapping.select_next_item(),
-        ["<Tab>"] = nil, -- Disabled to avoid conflict with copilot
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    }),
-    sources = {
-        { name = "nvim_lsp" },
-    },
+  mapping = cmp.mapping.preset.insert({
+    -- ["<Tab>"] = cmp.mapping.select_next_item(),
+    ["<Tab>"] = nil, -- Disabled to avoid conflict with copilot
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = {
+    { name = "nvim_lsp" },
+  },
 })
 --
 require("typescript-tools").setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        separate_diagnostic_server = true,
-        publish_diagnostic_on = "insert_leave",
-        expose_as_code_action = "all",
-        tsserver_file_preferences = {
-            includeInlayParameterNameHints = "all",
-            includeCompletionsForModuleExports = true,
-        },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    separate_diagnostic_server = true,
+    publish_diagnostic_on = "insert_leave",
+    expose_as_code_action = "all",
+    tsserver_file_preferences = {
+      includeInlayParameterNameHints = "all",
+      includeCompletionsForModuleExports = true,
     },
-    filetypes = {
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-        "astro"
-    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+  },
 })
 
 require("conform").setup({
-    formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        astro = { "prettier" },
-        json = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-        scss = { "prettier" },
-        lua = { "stylua" }, -- optional, for lua files
-    },
-    format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
-    }
+  formatters_by_ft = {
+    javascript = { "prettier" },
+    typescript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
+    html = { "prettier" },
+    css = { "prettier" },
+    scss = { "prettier" },
+    lua = { "stylua" }, -- optional, for lua files
+  },
+  format_on_save = {
+    timeout_ms = 500,
+    lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
+  }
 })

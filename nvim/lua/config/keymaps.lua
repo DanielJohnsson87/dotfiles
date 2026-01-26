@@ -28,3 +28,6 @@ end, { desc = "Confirm deletion of lines matching pattern" })
 vim.keymap.set("n", "<leader>rdn", function()
   refactor_utils.clear_pattern()
 end, { desc = "Clear highlight of lines matching pattern" })
+
+vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')

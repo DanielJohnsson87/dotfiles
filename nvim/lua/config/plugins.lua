@@ -6,7 +6,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  "ThePrimeagen/vim-be-good",
   "scrooloose/nerdtree",
   "numToStr/Comment.nvim",
   "mhinz/vim-startify",
@@ -65,12 +64,24 @@ require("lazy").setup({
   },
   "matze/vim-move",
   "tpope/vim-surround",
-  { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
-  "mustache/vim-mustache-handlebars",
+  -- { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
+  { "ThePrimeagen/git-worktree.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  {
+    'camgraff/telescope-tmux.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    config = function()
+      require('telescope').load_extension('tmux')
+    end,
+  },
+  "ggandor/leap.nvim",
+  -- "tris203/precognition.nvim"
+  -- "OmniSharp/omnisharp-vim", -- C# support
 })
 
 -- Harpoon setup
-require("config.harpoon").setup();
+-- require("config.harpoon").setup();
 
 -- Gitsigns setup
 require('gitsigns').setup({ current_line_blame = true })
