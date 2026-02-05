@@ -42,15 +42,27 @@ require("lazy").setup({
   },
   "github/copilot.vim",
   "folke/tokyonight.nvim",
-  { "catppuccin/nvim",              name = "catppuccin",                                                priority = 1000 },
-  { "lewis6991/gitsigns.nvim",      dependencies = { "nvim-lua/plenary.nvim" } },
-  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
-  { "stevearc/conform.nvim",        opts = {} },
-  "neovim/nvim-lspconfig",             -- LSP client
-  "williamboman/mason.nvim",           -- LSP installer
-  "williamboman/mason-lspconfig.nvim", -- bridge between mason and lspconfig
-  "hrsh7th/nvim-cmp",                  -- Completion plugin
-  "hrsh7th/cmp-nvim-lsp",              -- LSP source for nvim-cmp
+  { "catppuccin/nvim",         name = "catppuccin",                       priority = 1000 },
+  { "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  -- { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
+  { "stevearc/conform.nvim",   opts = {} },
+  {
+    "mason-org/mason.nvim",
+    opts = {}
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {},
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      -- "neovim/nvim-lspconfig",
+    },
+  },
+  -- "neovim/nvim-lspconfig",             -- LSP client
+  -- "williamboman/mason.nvim",           -- LSP installer
+  -- "williamboman/mason-lspconfig.nvim", -- bridge between mason and lspconfig
+  "hrsh7th/nvim-cmp",     -- Completion plugin
+  "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files

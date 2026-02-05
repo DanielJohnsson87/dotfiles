@@ -1,146 +1,76 @@
--- Mason setup
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "gopls", "eslint", "jsonls", "html", "cssls", "omnisharp" }, -- add your desired servers
-  automatic_installation = true,
-  automatic_enable = true,
-  handlers = {
-    -- Default handler for all servers
-    function(server_name)
-      require("lspconfig")[server_name].setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-    end,
-    -- Disable ts_ls since we're using typescript-tools
-    ["ts_ls"] = function() end,
-  },
-})
+-- local cmp = require("cmp")
+-- --
+-- cmp.setup({
+--   mapping = cmp.mapping.preset.insert({
+--     -- ["<Tab>"] = cmp.mapping.select_next_item(),
+--     ["<Tab>"] = nil, -- Disabled to avoid conflict with copilot
+--     ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+--     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--   }),
+--   sources = {
+--     { name = "nvim_lsp" },
+--   },
+-- })
+-- --
+--
 
--- Setup LSP servers
-local lspconfig = require("lspconfig")
+local M = {
+  setup = function()
 
--- Add capabilities from nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    vim.diagnostic.config({
+      -- virtual_lines = true, -- Uncomment to show virtual lines for all diagnostics
+      virtual_lines = { current_line = true }, -- Uncomment to show virtual lines only for the current line
+    })
 
--- Common on_attach function (keymaps, etc.)
-local on_attach = function(client, bufnr)
-  local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  -- LSP core mappings
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "grr", function()
-    require("telescope.builtin")
-        .lsp_references({
-          show_line = false,
-          include_declaration = false,
-        })
-  end, opts)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', '<leader>*', [[:let @/='\<'.expand('<cword>').'\>'<CR>n]],
-    { desc = "Search for word under cursor" })
+    require("conform").setup({
+      formatters_by_ft = {
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
+        scss = { "prettier" },
+        lua = { "stylua" }, -- optional, for lua files
+      },
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
+      }
+    })
 
-  vim.o.updatetime = 250 -- shorter delay before CursorHold triggers
 
-  vim.api.nvim_create_autocmd("CursorHold", {
-    callback = function()
-      vim.diagnostic.open_float(nil, {
-        focusable = false,
-        border = "rounded",
-        source = "always",
-        prefix = '',
-        scope = "cursor",
-      })
-    end,
-  })
+    vim.api.nvim_create_autocmd("LspAttach", {
+      -- group = vim.api.nvim_create_augroup("my.lsp", {}),
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then
+          return
+        end
+        if client:supports_method("textDocument/completion") then
+          vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
+          vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+          vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, { buffer = args.buf, desc = "LSP Completion" })
+        end
 
-  -- TypeScript: organize imports
-  if client.name == "typescript-tools" or client.name == "tsserver" then
-    vim.keymap.set("n", "<leader>oi", function()
-      vim.cmd("TSToolsOrganizeImports")
-    end, { buffer = bufnr, desc = "Organize Imports" })
-  end
-end
+        vim.keymap.set('n', '<leader>oi', function()
+          vim.lsp.buf.code_action({
+            apply = true,
+            context = {
+              only = { "source.organizeImports" },
+              diagnostics = {},
+            },
+          })
+        end, { desc = "Organize Imports" })
 
--- Setup servers
-
-lspconfig.gopls.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
+        vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action)
+      end -- callback
+    })
+  end,
 }
 
-lspconfig.lua_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-lspconfig.eslint.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    workingDirectory = { mode = "auto" },
-  },
-  cmd_env = {
-    BABEL_ENV = "development",
-  },
-})
-
--- lspconfig.omnisharp_mono.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
---   cmd = { vim.fn.stdpath("data") .. "/mason/bin/omnisharp-mono" }
--- })
 
 
-local cmp = require("cmp")
---
-cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-    -- ["<Tab>"] = cmp.mapping.select_next_item(),
-    ["<Tab>"] = nil, -- Disabled to avoid conflict with copilot
-    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = {
-    { name = "nvim_lsp" },
-  },
-})
---
-require("typescript-tools").setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    separate_diagnostic_server = true,
-    publish_diagnostic_on = "insert_leave",
-    expose_as_code_action = "all",
-    tsserver_file_preferences = {
-      includeInlayParameterNameHints = "all",
-      includeCompletionsForModuleExports = true,
-    },
-  },
-  filetypes = {
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
-  },
-})
-
-require("conform").setup({
-  formatters_by_ft = {
-    javascript = { "prettier" },
-    typescript = { "prettier" },
-    javascriptreact = { "prettier" },
-    typescriptreact = { "prettier" },
-    json = { "prettier" },
-    html = { "prettier" },
-    css = { "prettier" },
-    scss = { "prettier" },
-    lua = { "stylua" }, -- optional, for lua files
-  },
-  format_on_save = {
-    timeout_ms = 500,
-    lsp_fallback = true, -- fallback to LSP formatting if no formatter configured
-  }
-})
+return M

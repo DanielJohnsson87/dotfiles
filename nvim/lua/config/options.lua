@@ -23,3 +23,4 @@ vim.opt.spell = true                     -- Enable spell checking
 vim.opt.ttyfast = true                   -- Speed up scrolling
 vim.cmd("filetype plugin indent on")
 vim.cmd("syntax on")
+vim.opt.winborder = "rounded"              -- Rounded window borders

@@ -4,8 +4,10 @@ vim.g.move_key_modifier_visualmode = 'C'
 
 require("config.options")
 require("config.plugins")
-require("config.lsp")
+local lspConifg = require("config.lsp")
 require("config.keymaps")
+
+lspConifg.setup()
 
 -- Colorscheme
 vim.cmd("colorscheme catppuccin")
