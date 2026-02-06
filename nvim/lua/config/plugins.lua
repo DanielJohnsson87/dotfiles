@@ -6,7 +6,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  "ThePrimeagen/vim-be-good",
   "scrooloose/nerdtree",
   "numToStr/Comment.nvim",
   "mhinz/vim-startify",
@@ -43,15 +42,27 @@ require("lazy").setup({
   },
   "github/copilot.vim",
   "folke/tokyonight.nvim",
-  { "catppuccin/nvim",              name = "catppuccin",                                                priority = 1000 },
-  { "lewis6991/gitsigns.nvim",      dependencies = { "nvim-lua/plenary.nvim" } },
-  { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
-  { "stevearc/conform.nvim",        opts = {} },
-  "neovim/nvim-lspconfig",             -- LSP client
-  "williamboman/mason.nvim",           -- LSP installer
-  "williamboman/mason-lspconfig.nvim", -- bridge between mason and lspconfig
-  "hrsh7th/nvim-cmp",                  -- Completion plugin
-  "hrsh7th/cmp-nvim-lsp",              -- LSP source for nvim-cmp
+  { "catppuccin/nvim",         name = "catppuccin",                       priority = 1000 },
+  { "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  -- { "pmizio/typescript-tools.nvim", dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" } },
+  { "stevearc/conform.nvim",   opts = {} },
+  {
+    "mason-org/mason.nvim",
+    opts = {}
+  },
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {},
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      -- "neovim/nvim-lspconfig",
+    },
+  },
+  -- "neovim/nvim-lspconfig",             -- LSP client
+  -- "williamboman/mason.nvim",           -- LSP installer
+  -- "williamboman/mason-lspconfig.nvim", -- bridge between mason and lspconfig
+  "hrsh7th/nvim-cmp",     -- Completion plugin
+  "hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
@@ -65,12 +76,24 @@ require("lazy").setup({
   },
   "matze/vim-move",
   "tpope/vim-surround",
-  { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
-  "mustache/vim-mustache-handlebars",
+  -- { "ThePrimeagen/harpoon", branch = "harpoon2", dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" } },
+  { "ThePrimeagen/git-worktree.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+  {
+    'camgraff/telescope-tmux.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    config = function()
+      require('telescope').load_extension('tmux')
+    end,
+  },
+  "ggandor/leap.nvim",
+  -- "tris203/precognition.nvim"
+  -- "OmniSharp/omnisharp-vim", -- C# support
 })
 
 -- Harpoon setup
-require("config.harpoon").setup();
+-- require("config.harpoon").setup();
 
 -- Gitsigns setup
 require('gitsigns').setup({ current_line_blame = true })
