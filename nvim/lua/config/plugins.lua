@@ -87,7 +87,15 @@ require("lazy").setup({
       require('telescope').load_extension('tmux')
     end,
   },
-  "ggandor/leap.nvim",
+  "ggandor/leap.nvim", {
+  "0xKitsune/pr.nvim",
+  dependencies = {
+    "nvim-telescope/telescope.nvim", -- optional
+  },
+  config = function()
+    require("pr").setup()
+  end,
+}
   -- "tris203/precognition.nvim"
   -- "OmniSharp/omnisharp-vim", -- C# support
 })
@@ -95,8 +103,8 @@ require("lazy").setup({
 -- Harpoon setup
 -- require("config.harpoon").setup();
 
--- Gitsigns setup
-require('gitsigns').setup({ current_line_blame = true })
+-- Gitsigns setup (disabled — causes index.lock collisions in bare repo worktrees)
+-- require('gitsigns').setup({ current_line_blame = true })
 
 -- numToStr/Comment.nvim
 require('Comment').setup({
