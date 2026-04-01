@@ -24,6 +24,11 @@ vim.api.nvim_set_keymap('n', '<C-t>', ':NERDTreeToggle<CR>', { noremap = true, s
 vim.keymap.set("n", "<C-u>", "<C-u>zz");
 vim.keymap.set("n", "<C-d>", "<C-d>zz");
 
+vim.keymap.set("n", "n", "nzz");
+vim.keymap.set("n", "N", "Nzz");
+vim.keymap.set("n", "*", "*zz");
+vim.keymap.set("n", "#", "#zz");
+
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>]],
   { desc = "Search & replace word under cursor" })
 

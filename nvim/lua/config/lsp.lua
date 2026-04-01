@@ -16,7 +16,7 @@
 
 local M = {
   setup = function()
-    vim.lsp.enable({ "cssls", "cssmodules_ls", "eslint", "gopls", "html", "jsonls", "lua_ls", "ts_ls" })
+    vim.lsp.enable({ "cssls", "cssmodules_ls", "closure_ls", "eslint", "gopls", "html", "jsonls", "lua_ls", "ts_ls" })
 
     vim.diagnostic.config({
       -- virtual_lines = true, -- Uncomment to show virtual lines for all diagnostics
@@ -35,6 +35,20 @@ local M = {
         css = { "prettier" },
         scss = { "prettier" },
         lua = { "stylua" }, -- optional, for lua files
+      },
+      formatters = {
+        prettier = {
+          -- Resolve prettier via Node's require.resolve instead of node_modules/.bin/prettier.
+          -- Yarn 1 can point the .bin symlink to a nested dependency's older prettier version
+          -- (e.g. storybook's prettier 2.x), causing mismatches with ESLint's prettier plugin.
+          command = function()
+            local bin = vim.fn.system("node -e \"process.stdout.write(require.resolve('prettier/bin/prettier.cjs'))\"")
+            if vim.v.shell_error == 0 and bin ~= "" then
+              return bin
+            end
+            return "prettier"
+          end,
+        },
       },
       format_on_save = {
         timeout_ms = 500,

@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "deny": [
+      "Bash(git commit*)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/daniel/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "closure-ls@closure-lsp-local": true
+  },
+  "extraKnownMarketplaces": {
+    "closure-lsp-local": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/daniel/dev/closure-lsp"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
+}
