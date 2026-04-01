@@ -16,6 +16,8 @@
 
 local M = {
   setup = function()
+    vim.lsp.enable({ "cssls", "cssmodules_ls", "closure_ls", "eslint", "gopls", "html", "jsonls", "lua_ls", "ts_ls" })
+
     vim.diagnostic.config({
       -- virtual_lines = true, -- Uncomment to show virtual lines for all diagnostics
       virtual_lines = { current_line = true }, -- Uncomment to show virtual lines only for the current line
@@ -63,9 +65,9 @@ local M = {
           return
         end
         if client:supports_method("textDocument/completion") then
-          vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
+          vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
           vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-          vim.keymap.set("i", "<C-Space>", vim.lsp.buf.completion, { buffer = args.buf, desc = "LSP Completion" })
+          vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { buffer = args.buf, desc = "LSP Completion" })
         end
 
         vim.keymap.set('n', '<leader>oi', function()
@@ -82,8 +84,6 @@ local M = {
       end -- callback
     })
   end,
-
-  vim.lsp.enable("closure_ls")
 }
 
 
