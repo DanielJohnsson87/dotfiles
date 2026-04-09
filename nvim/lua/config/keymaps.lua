@@ -2,8 +2,11 @@ local refactor_utils = require("utils.refactor")
 local opts = { noremap = true, silent = true }
 
 -- LSP
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to Definition" })
+vim.keymap.set("n", "<leader>gd", function()
+  vim.cmd("rightbelow vsplit")
+  vim.lsp.buf.definition()
+end, { desc = "Go to Definition in vsplit" })
 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 vim.keymap.set("n", "grr", function()
   require("telescope.builtin")
