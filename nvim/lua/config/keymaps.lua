@@ -48,5 +48,20 @@ vim.keymap.set("n", "<leader>rdn", function()
   refactor_utils.clear_pattern()
 end, { desc = "Clear highlight of lines matching pattern" })
 
+-- Toggle gitsigns base: index (default) ↔ default branch (master/main)
+local branch_base_active = false
+vim.keymap.set("n", "<leader>gB", function()
+  if branch_base_active then
+    require("gitsigns").change_base(nil, true)
+    branch_base_active = false
+    vim.notify("Gitsigns: vs index (default)")
+  else
+    local base = require("config.telescope.git_diff_branch").get_default_branch()
+    require("gitsigns").change_base(base, true)
+    branch_base_active = true
+    vim.notify("Gitsigns: vs " .. base)
+  end
+end, { desc = "Toggle gitsigns base: index / branch" })
+
 vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
 vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')

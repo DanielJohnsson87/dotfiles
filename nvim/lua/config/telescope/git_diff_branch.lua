@@ -8,7 +8,7 @@ local action_state = require("telescope.actions.state")
 
 local M = {}
 
-local function get_default_branch()
+M.get_default_branch = function()
   local result = vim.fn.system("git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null")
   if vim.v.shell_error == 0 and result then
     return vim.trim(result):gsub("^refs/remotes/origin/", "")
@@ -19,7 +19,7 @@ end
 M.git_diff_branch = function(opts)
   opts = opts or {}
   opts.cwd = opts.cwd or vim.uv.cwd()
-  local base = opts.base or get_default_branch()
+  local base = opts.base or M.get_default_branch()
 
   local result = vim.fn.systemlist("git diff --name-only " .. base .. "...HEAD")
   if vim.v.shell_error ~= 0 or #result == 0 then
