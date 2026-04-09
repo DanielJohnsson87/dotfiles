@@ -5,6 +5,7 @@ M.setup = function()
   local multigrep = require("config.telescope.multigrep")
   require('config.telescope.tmux').setup()
   require('config.telescope.git_worktree').setup()
+  require('config.telescope.git_diff_branch').setup()
 
   vim.keymap.set("n", "<leader>fg", multigrep.live_multigrep)
 
