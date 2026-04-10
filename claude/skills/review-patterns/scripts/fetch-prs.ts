@@ -188,6 +188,8 @@ export function renderPrMarkdown(
         `### Comment by @${p.user.login} on \`${p.path}\`${p.line ? ` (line ${p.line})` : ""}`
       );
       lines.push("");
+      lines.push(`**Link:** ${meta.url}#discussion_r${p.id}`);
+      lines.push("");
 
       if (p.diffHunk) {
         lines.push("**Diff context:**");
@@ -207,6 +209,7 @@ export function renderPrMarkdown(
 
       for (const reply of thread.replies) {
         lines.push(`#### Reply by @${reply.user.login}`);
+        lines.push(`**Link:** ${meta.url}#discussion_r${reply.id}`);
         lines.push(reply.body);
         lines.push("");
       }
@@ -224,6 +227,8 @@ export function renderPrMarkdown(
 
     for (const r of reviewsWithBody) {
       lines.push(`### ${r.state} by @${r.user.login}`);
+      lines.push(`**Link:** ${meta.url}#pullrequestreview-${r.id}`);
+      lines.push("");
       lines.push(r.body);
       lines.push("");
       lines.push("---");
@@ -238,6 +243,8 @@ export function renderPrMarkdown(
 
     for (const c of issueComments) {
       lines.push(`### Comment by @${c.user.login}`);
+      lines.push(`**Link:** ${meta.url}#issuecomment-${c.id}`);
+      lines.push("");
       lines.push(c.body);
       lines.push("");
       lines.push("---");

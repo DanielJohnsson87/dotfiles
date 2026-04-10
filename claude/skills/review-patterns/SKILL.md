@@ -89,7 +89,8 @@ Synthesize the raw PR review data into a structured knowledge base. This is done
 - **Why it matters**: {the reasoning reviewers give}
 - **Correct approach**: {what the code should look like}
 - **Areas**: {codebase areas where this applies, e.g., `src/auth/`, `*.test.ts`}
-- **Evidence**: PR #{N} (@reviewer), PR #{M} (@reviewer)
+- **Evidence**: [PR #{N} comment]({link_from_raw_file}) (@reviewer), [PR #{M} comment]({link_from_raw_file}) (@reviewer)
+  Use the `**Link:**` URLs from the raw files when available. For older raw files without links, use the PR URL from the header (e.g., `https://github.com/owner/repo/pull/N`).
 
 {repeat for each pattern}
 

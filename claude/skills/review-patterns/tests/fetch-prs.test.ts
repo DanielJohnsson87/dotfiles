@@ -209,7 +209,7 @@ describe("renderPrMarkdown", () => {
     expect(md).toContain("https://github.com/acme/widget/pull/42");
   });
 
-  test("renders threaded review comments with diff context", () => {
+  test("renders threaded review comments with diff context and links", () => {
     const threads = [
       {
         parent: mapReviewComment(mockReviewComments[0]),
@@ -222,25 +222,29 @@ describe("renderPrMarkdown", () => {
     expect(md).toContain("`src/cache.ts`");
     expect(md).toContain("line 45");
     expect(md).toContain("Consider using a Map");
+    expect(md).toContain("https://github.com/acme/widget/pull/42#discussion_r1001");
     expect(md).toContain("Reply by @danielstocks");
+    expect(md).toContain("https://github.com/acme/widget/pull/42#discussion_r1002");
     expect(md).toContain("Good point");
   });
 
-  test("renders top-level reviews with state", () => {
+  test("renders top-level reviews with state and link", () => {
     const reviews = [mapReview(mockReviews[0])];
     const md = renderPrMarkdown(meta, [], reviews, []);
     expect(md).toContain("## Top-Level Reviews");
     expect(md).toContain("COMMENTED");
     expect(md).toContain("@reviewer1");
     expect(md).toContain("Looks good overall");
+    expect(md).toContain("https://github.com/acme/widget/pull/42#pullrequestreview-2001");
   });
 
-  test("renders issue comments in Discussion section", () => {
+  test("renders issue comments in Discussion section with link", () => {
     const comments = [mapIssueComment(mockIssueComments[0])];
     const md = renderPrMarkdown(meta, [], [], comments);
     expect(md).toContain("## Discussion");
     expect(md).toContain("@reviewer2");
     expect(md).toContain("update the docs");
+    expect(md).toContain("https://github.com/acme/widget/pull/42#issuecomment-3001");
   });
 
   test("skips sections with no data", () => {
