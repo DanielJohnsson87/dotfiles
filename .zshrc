@@ -14,6 +14,9 @@ export GIT_EDITOR=nvim
 # https://docs.anthropic.com/en/docs/claude-code/troubleshooting#recommended-solution-create-a-user-writable-npm-prefix
 export PATH=~/.npm-global/bin:$PATH
 
+# Local secrets (API keys, tokens) — not tracked in git
+[ -f ~/.secrets ] && source ~/.secrets
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME

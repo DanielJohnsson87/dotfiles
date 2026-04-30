@@ -1,6 +1,18 @@
 {
   "playwright": {
     "command": "npx",
-    "args": ["@playwright/mcp@latest"]
+    "args": [
+      "@playwright/mcp@latest"
+    ]
+  },
+  "datalake": {
+    "command": "uvx",
+    "args": [
+      "awslabs.aws-dataprocessing-mcp-server@latest"
+    ],
+    "env": {
+      "AWS_PROFILE": "proddataanalyst",
+      "AWS_REGION": "eu-central-1"
+    }
   }
 }

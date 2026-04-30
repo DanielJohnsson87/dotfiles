@@ -16,11 +16,11 @@ handoff documents. Each stage produces a markdown file that the next stage can b
 
 ## Trigger
 
-The user starts a message with `Feature plan:` or `/feature-plan` followed by their description.
+The user starts a message with `Feature plan:` or `/skill:feature-plan` followed by their description.
 
 ## Plans Directory
 
-All pipeline artifacts are stored in `PLANS_DIR` which is `<auto-memory>/memory/plans/<feature-name>/`.
+All pipeline artifacts are stored in `PLANS_DIR` which is `~/plans/<feature-name>/`.
 
 Use kebab-case for `<feature-name>` (e.g., `add-stripe-webhooks`, `user-profile-redesign`).
 
@@ -33,13 +33,11 @@ PLANS_DIR/01-research.md       ← Objective system map. No opinions, no suggest
 PLANS_DIR/02-brief.md          ← What & why. Collaborative, end-user focused.
 
 PLANS_DIR/03-test-cases.md ┐
-PLANS_DIR/03-ceo-review.md ├── Flexible. User picks which to run and in what order.
-PLANS_DIR/03-plan.md       ┘
+PLANS_DIR/03-plan.md       ┘   Flexible. User picks which to run and in what order.
 
-PLANS_DIR/04-arch-review.md    ← Optional. Technical design review.
-PLANS_DIR/05-impl-plan.md      ← Concrete implementation steps.
-PLANS_DIR/06-review.md         ← Post-implementation review.
-PLANS_DIR/07-pr.md             ← Prepare PR description, optionally create PR.
+PLANS_DIR/04-impl-plan.md      ← Concrete implementation steps.
+PLANS_DIR/05-review.md         ← Post-implementation review.
+PLANS_DIR/06-pr.md             ← Prepare PR description, optionally create PR.
 ```
 
 ## Stage Details
@@ -98,12 +96,7 @@ High-level acceptance criteria. Optional, user-driven.
 - List concrete scenarios to verify
 - Identify which verification tools/methods apply to each criterion (e.g., Playwright e2e,
   REST API calls, unit tests, manual verification) — informed by what research discovered
-- Do not define test implementations here — those belong in `05-impl-plan.md`
-
-### 03-ceo-review.md
-Business logic validation. **Use the `/plan-ceo-review` skill** to run this stage.
-The skill provides a comprehensive interactive review with three modes (Scope Expansion, Hold Scope, Scope Reduction).
-Write the output to `03-ceo-review.md`.
+- Do not define test implementations here — those belong in `04-impl-plan.md`
 
 ### 03-plan.md
 High-level plan grounded in the brief and research.
@@ -114,12 +107,7 @@ High-level plan grounded in the brief and research.
 - Question the plan from multiple perspectives (user, business, technical) to identify gaps or risks
 - Use ASCII diagrams, state machines, flow charts etc to illustrate and find gaps in the plan before implementation
 
-### 04-arch-review.md
-Optional. Technical design review. **Use the `/plan-eng-review` skill** to run this stage.
-The skill provides an interactive review covering architecture, code quality, tests, and performance.
-Write the output to `04-arch-review.md`.
-
-### 05-impl-plan.md
+### 04-impl-plan.md
 Concrete implementation steps. Follow TDD where possible.
 - Ordered list of changes with specific files to touch
 - For each change, define the test first: what test to write, where it lives, what it asserts
@@ -135,16 +123,16 @@ Concrete implementation steps. Follow TDD where possible.
   Flag any steps that would violate team conventions. Cite the pattern name and evidence.
 - What "done" looks like
 
-### 06-review.md
+### 05-review.md
 Post-implementation review. Written after the work is complete.
 - What was actually done (vs. what was planned)
-- **Review patterns**: Run `/review-patterns` to check the implementation diff against
+- **Review patterns**: Run `/skill:review-patterns` to check the implementation diff against
   team-specific conventions. Include any findings in the review output.
 - What to watch for (monitoring, edge cases)
 - Follow-up work identified
 - Lessons learned
 
-### 07-pr.md
+### 06-pr.md
 Prepare a pull request. Written after implementation and review.
 1. Read the brief, plan, impl plan, review, and the actual git diff.
 2. Check for `.github/pull_request_template.md` in the repo. If it exists, use it as the
@@ -223,7 +211,7 @@ User: Perfect.
 
 Agent: [writes 02-brief.md]
        "Brief saved. How would you like to proceed?
-        Available: test cases, ceo review, plan, or skip ahead."
+        Available: test cases, plan, or skip ahead."
 
 User: Let's go straight to the plan.
 

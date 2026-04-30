@@ -3,11 +3,22 @@ All paths below are relative to Claude Code's auto-memory directory (`~/.claude/
 - Store plans in `memory/plans/<feature-name>/` — referenced as `PLANS_DIR` below.
 - Store general lessons in `memory/lessons.md` - referenced as `LESSONS_FILE` below.
 
+## Writing compression rules
+Keep writing tight and concise. Avoid unnecessary words, especially in technical writing. Here are some rules to follow:
+- Drop filler: "literally", "purely", "fairly", "substantially", "quite", "actually", "the whole",
+"Strong ", "That's how long...", "It's worth ing".
+- Collapse restatements: if a bullet's bold lead already says X, don't repeat X in the first
+sentence.
+- Shrink "Possible reads: (a)... (b)... (c)..." lists but keep all enumerated items.
+- Merge adjacent short sentences connected by em-dashes where they say one thing.
+
 ## Workflow
 
-### Principles
-- ALWAYS plan before you code.
+### Workflow Rules
+- NEVER edit code before presenting and getting approval on a plan. Always show your approach first, then wait for confirmation before making changes.
 - NEVER commit any code without asking the user first.
+- Do not modify auto-generated files (e.g., .d.ts files, phrasebook/translation files). If a change seems needed in an auto-generated file, flag it and ask first.
+- When a feature plan or pipeline document exists, always check it first before searching globally or scoping independently. The user's plan docs are the source of truth for task context.
 - ALWAYS start by evaluating if there is a existing plan in the `PLANS_DIR` for the current feature. If so, review it before doing any work.
 - ALWAYS write detailed plans upfront before doing any implementation. 
 
@@ -40,6 +51,9 @@ All paths below are relative to Claude Code's auto-memory directory (`~/.claude/
 - Skip this for simple, obvious changes - don't over-engineer.
 - Challenge your own work before presenting it to others.
 
+
+## PR Reviews
+- When reviewing a PR, always use the `/review-pr` skill. It launches parallel review agents (structural + team patterns), persists findings, and supports multi-round triage.
 
 ## gstack
 

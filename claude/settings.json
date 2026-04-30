@@ -8,9 +8,8 @@
       "Grep",
       "Glob"
     ],
-    "deny": [
-      "Bash(git commit*)"
-    ]
+    "deny": [],
+    "defaultMode": "auto"
   },
   "statusLine": {
     "type": "command",
@@ -22,7 +21,8 @@
     "frontend-design@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
-    "closure-ls@closure-lsp-local": true
+    "closure-ls@closure-lsp-local": true,
+    "mempalace@mempalace": true
   },
   "extraKnownMarketplaces": {
     "closure-lsp-local": {
@@ -30,8 +30,18 @@
         "source": "directory",
         "path": "/Users/daniel/dev/closure-lsp"
       }
+    },
+    "mempalace": {
+      "source": {
+        "source": "github",
+        "repo": "milla-jovovich/mempalace"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "autoCompactEnabled": false,
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }

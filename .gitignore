@@ -1,4 +1,5 @@
 node_modules
 coc/extensions/coc-json-data
 CLAUDE.md
+.DS_Store
 
