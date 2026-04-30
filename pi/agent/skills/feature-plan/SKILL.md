@@ -89,6 +89,7 @@ perspective where possible. It should be short, concise, and free of technical d
 - Minimal technical details — save those for later stages
 - Written from the end user's perspective when possible
 - Only finalized and written to file when the user explicitly approves
+- After writing the file, call the `checkpoint` tool with label `brief-ready`
 
 ### 03-test-cases.md
 High-level acceptance criteria. Optional, user-driven.
@@ -109,6 +110,7 @@ High-level plan grounded in the brief and research.
 
 ### 04-impl-plan.md
 Concrete implementation steps. Follow TDD where possible.
+- After writing the file, call the `checkpoint` tool with label `plan-ready`
 - Ordered list of changes with specific files to touch
 - For each change, define the test first: what test to write, where it lives, what it asserts
 - Then define the implementation that makes the test pass
