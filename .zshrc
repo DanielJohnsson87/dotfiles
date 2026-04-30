@@ -11,6 +11,8 @@ export PATH=$PATH:$HOME/.yarn/bin
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/daniel/.oh-my-zsh"
 export GIT_EDITOR=nvim
+export EDITOR=nvim
+export VISUAL=nvim
 # https://docs.anthropic.com/en/docs/claude-code/troubleshooting#recommended-solution-create-a-user-writable-npm-prefix
 export PATH=~/.npm-global/bin:$PATH
 
@@ -97,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -149,3 +151,12 @@ esac
 # pnpm end
 
 export PATH="$HOME/.local/bin:$PATH"
+
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
+
+# bun completions
+[ -s "/Users/daniel/.bun/_bun" ] && source "/Users/daniel/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
